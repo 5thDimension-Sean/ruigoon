@@ -4,7 +4,7 @@
 * @file subsystems.hpp
 * @brief This file contains the definitions and constructors for the robot's subsystems.
 * @details This includes the motors, smartwire devices, and three wire port devices.
-* @author Ansh Rao - 2145Z
+* 
 */
 
 #include <cstdint>  // IWYU pragma: keep
@@ -18,41 +18,35 @@
 #pragma region constants
 
 // Defining drive motor ports
-#define PORT_LF -12
-#define PORT_LM -13
-#define PORT_LB -20
-#define PORT_RF 14
-#define PORT_RM 16
-#define PORT_RB 17
+#define PORT_LF -11
+#define PORT_LM -12
+#define PORT_LB -13
+#define PORT_RF 20
+#define PORT_RM 19
+#define PORT_RB 18
 
 // Defining subsystem motor ports
-#define PORT_INTAKE         -9
-#define PORT_INTAKE2        -19
-#define PORT_INTAKE3        -18
+#define PORT_INTAKE         -1
+#define PORT_INTAKE2        2
+#define PORT_INTAKE3        -6
 
 // Defining smartwire device ports
-#define PORT_IMU            21
-#define PORT_ODOM_HORIZ     11
-#define PORT_ODOM_VERT      15
-#define PORT_OPTICAL        
-#define PORT_OPTICAL_2      
+#define PORT_IMU            14
+#define PORT_OPTICAL        22
+#define PORT_OPTICAL_2      23
 
 // Defining three wire ports
 #define PORT_LOADER         'H'
-#define PORT_PISTON_SCORER  'C'
-#define PORT_WING           'B'
-#define PORT_PISTON_PARK    'E'
+#define PORT_PISTON_SCORER  'E'
+#define PORT_WING           'F'
+#define PORT_PISTON_PARK    'B'
 #define PORT_DESCORE        'D'
 
 // Defining robot constants
 #define DRIVE_DIAMETER      3.25
-#define TRACK_WIDTH         10.5
+#define TRACK_WIDTH         11
 #define DRIVE_RPM           450
-#define ODOM_DIAMETER_V       2.75
-#define ODOM_DIAMETER_H       2.0
-#define OFFSET_VERT         -0.25
-#define OFFSET_HORI         -2.0
-//-2.125
+
 #define DRIVE_SPEED         110
 #define TURN_SPEED          90
 #define SWING_SPEED         110
@@ -62,10 +56,10 @@
 #define BUTTON_INTAKE       pros::E_CONTROLLER_DIGITAL_R1
 #define BUTTON_OUTTAKE      pros::E_CONTROLLER_DIGITAL_R2
 #define BUTTON_SCORE        pros::E_CONTROLLER_DIGITAL_L1
-#define BUTTON_SCORE_MID    pros::E_CONTROLLER_DIGITAL_B
+#define BUTTON_SCORE_MID    pros::E_CONTROLLER_DIGITAL_L2
 
-#define BUTTON_LOADER        pros::E_CONTROLLER_DIGITAL_DOWN
-#define BUTTON_WING          pros::E_CONTROLLER_DIGITAL_L2
+#define BUTTON_LOADER        pros::E_CONTROLLER_DIGITAL_UP
+#define BUTTON_WING          pros::E_CONTROLLER_DIGITAL_X
 #define BUTTON_SCORER        pros::E_CONTROLLER_DIGITAL_A
 #define BUTTON_PARK          pros::E_CONTROLLER_DIGITAL_Y
 #define BUTTON_DESCORE       pros::E_CONTROLLER_DIGITAL_RIGHT
@@ -76,7 +70,6 @@
 
 // Controller constructors
 inline pros::Controller controlla (pros::E_CONTROLLER_MASTER);  // Master controller
-inline pros::Controller controlla2(pros::E_CONTROLLER_PARTNER);  // Partner controller
 
 // Motor constructors
 inline pros::Motor motor_LF     (PORT_LF, pros::v5::MotorGears::blue);
@@ -98,8 +91,6 @@ inline pros::Motor motor_intake3  (PORT_INTAKE3, pros::v5::MotorGears::blue);
 
 // smartwire device constructors
 inline pros::Imu      imu               (PORT_IMU);
-inline pros::Rotation odom_horiz        (PORT_ODOM_HORIZ);
-inline pros::Rotation odom_vert         (PORT_ODOM_VERT);
 inline pros::Optical  optical           (PORT_OPTICAL);
 inline pros::Optical  optical_2         (PORT_OPTICAL_2);
 

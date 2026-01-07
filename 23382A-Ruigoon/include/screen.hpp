@@ -29,9 +29,12 @@ void pathViewerTask();
 
 class AutonObj {
     public:
-        function<void()> callback = doNothing;
-        string name = "no name";
-        lv_color32_t color = pink;
+    AutonObj() = default;
+    AutonObj(function<void()> cb, const string& nm, lv_color32_t c) : callback(cb), name(nm), color(c) {}
+
+    function<void()> callback = doNothing;
+    string name = "no name";
+    lv_color32_t color = pink;
 };
 
 class AutonSel {

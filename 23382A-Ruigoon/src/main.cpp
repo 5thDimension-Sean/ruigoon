@@ -30,7 +30,7 @@ void initialize() {
   //ez::as::auton_selector.autons_add({});
 
   auton_sel.selector_populate(std::vector<AutonObj>{
-      {doNothing, "2145Z", pink},
+      {doNothing, "23382A", pink},
       {SAWP, "13 SAWP", green},
       {sixThreeLeft, "6 + 3 Left", blue},
       {sixThreeRight, "6 + 3 Right", blue},  
@@ -39,7 +39,8 @@ void initialize() {
       {right7, "Right 7", orange},
       {skills, "Skills", gray},
       {measure_offsets, "measure offsets", purple},
-    });
+  }
+    );
 
   // Initialize chassis and auton selector
   chassis.opcontrol_curve_sd_initialize();
@@ -191,7 +192,7 @@ void ez_template_extras() {
       chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
-    if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
+    if (master.get_digital(DIGITAL_B)) {
       pros::motor_brake_mode_e_t preference = chassis.drive_brake_get();
       autonomous();
       chassis.drive_brake_set(preference);
@@ -232,8 +233,18 @@ void opcontrol() {
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
+    //chassis.drive_set(controlla.get_analog(ANALOG_LEFT_Y), controlla.get_analog(ANALOG_RIGHT_X)*0.75);
+    int forward = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int turn    = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    chassis.opcontrol_tank();  // Tank control
+    // deadband (important)
+    if (abs(forward) < 10) forward = 0;
+    if (abs(turn) < 10) turn = 0;
+
+    // scale turning
+    turn = turn * 0.65;
+
+    chassis.drive_set(forward + turn, forward - turn);
     //chassis.drive_set(controlla.get_analog(ANALOG_LEFT_Y) * 0.12, controlla.get_analog(ANALOG_RIGHT_Y) * 0.12);
     //print(2, "Left: " + std::to_string(controlla.get_analog(ANALOG_LEFT_Y)));
     //print(3, "Right: " + std::to_string(controlla.get_analog(ANALOG_RIGHT_Y)));
